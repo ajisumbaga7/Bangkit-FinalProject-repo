@@ -10,9 +10,6 @@ from os.path import dirname, join
 image_path = join(dirname(__file__), 'image.jpeg')
 model_path = join(dirname(__file__), 'model.h5')
 
-def test(a):
-    return str(np.array([1, 2, 3]))+str(tf.__version__)+a
-
 def make_gradcam_heatmap(
         img_array, model, last_conv_layer_name, classifier_layer_names):
     # First, we create a model that maps the input image to the activations
@@ -63,12 +60,12 @@ def make_gradcam_heatmap(
     return heatmap
 
 def pass_image(byteArray):
-    img_size = (224, 224)
+    img_size = (224, 224)                                   #image size of the input model
 
     img = Image.open(io.BytesIO(byteArray))                 #catch the bytearray from .java, create image from bytearray
     img = img.convert('RGB')
     img = img.resize(img_size, Image.NEAREST)               #resize
-    img = keras.preprocessing.image.img_to_array(img)     #convert to np array
+    img = keras.preprocessing.image.img_to_array(img)       #convert to np array
     array = np.expand_dims(img, axis=0)
 
     #do somethin with np array
