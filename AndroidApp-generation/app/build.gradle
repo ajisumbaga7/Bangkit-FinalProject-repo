@@ -1,17 +1,39 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
 
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.bangkit.pneumoniadetector"
-        minSdkVersion 18
+        applicationId "com.example.bangkitpneumoniadetection"
+        sourceSets {
+            main {
+                python {
+                    srcDirs = ["src/main/python"]
+                }
+            }
+        }
+        minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        ndk {
+            abiFilters "armeabi-v7a", "x86"
+        }
+        python {
+            buildPython "C:/Users/Admin/anaconda3/envs/dsta/python.exe"
+            //buildPython "python3"
+
+            pip {
+                install "numpy"
+                install "tensorflow"
+                install "pillow"
+                install "matplotlib"
+            }
+        }
     }
 
     buildTypes {
@@ -20,14 +42,30 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
 }
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation "com.google.android.material:material:1.0.0"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    // dependency to allow us to crop square images
+    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+    // TensorFlow lite dependency
+    compile 'org.tensorflow:tensorflow-lite:+'
 
 }
