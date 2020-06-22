@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--Use Relative Layout instead of default constrain layout.-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".camera_get"
+    android:background="@drawable/gradien2">
+
+
+
+    <ImageView
+        android:id="@+id/app_logo"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:contentDescription=""
+        app:srcCompat="@drawable/asd" />
+
+    <Button
+        android:id="@+id/inception_float"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/costum_button1"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/app_logo"
+        android:text="Pneumonia Detection"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="400dp"
+        android:textColor="@color/white"
+        />
+
+    <Button
+        android:id="@+id/camera_for_grade"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/costum_button1"
+        android:layout_centerHorizontal="true"
+        android:text="Grad Cam"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/inception_float"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white"
+        />
+
+
+</RelativeLayout>
