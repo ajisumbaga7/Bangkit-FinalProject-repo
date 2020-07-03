@@ -28,7 +28,7 @@
         android:layout_width="300dp"
         android:layout_height="125dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="150dp"
         app:srcCompat="@drawable/asd" />
 
     <EditText
@@ -86,12 +86,33 @@
         android:layout_height="wrap_content"
         android:background="@drawable/costum_button1"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:text="LOGIN"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="45dp"
+        android:layout_below="@id/input_password"
         android:textColor="@color/white"
         />
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/login_main"
+        android:layout_marginTop="10dp"
+        android:id="@+id/logo"
+        >
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/bangkitlogo"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#AEADAD"
+            android:textSize="20dp"
+            android:text="Powered by :"/>
+    </RelativeLayout>
 </RelativeLayout>

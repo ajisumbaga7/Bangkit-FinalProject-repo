@@ -53,7 +53,7 @@
             android:background="@drawable/costum_button1"
             android:layout_centerHorizontal="true"
             android:textColor="@color/white"
-            android:text="RESULT" />
+            android:text="SHOW RESULT" />
         
         <TextView
             android:id="@+id/cuk3"
@@ -63,19 +63,19 @@
             android:layout_marginTop="40dp"
             android:layout_marginLeft="10dp"
             android:textColor="#0C0C0C"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:text="Classification"
             />
         <TextView
             android:id="@+id/cuk4"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="45dp"
             android:layout_below="@id/classify_image"
-            android:layout_marginTop="70dp"
-            android:layout_marginLeft="10dp"
+            android:layout_marginTop="75dp"
+            android:layout_centerHorizontal="true"
             android:textColor="#AEADAD"
-            android:textSize="15dp"
-            android:text="Classified the image to get the result of pneumonia or normal lungs"
+            android:textSize="20dp"
+            android:text="Prediction Probability"
             />
 
         <TextView
@@ -88,32 +88,78 @@
             android:layout_marginTop="8dp"
             android:textColor="#0c0c0c"
             android:textAlignment="center"/>
-
         <TextView
-            android:id="@+id/cuk5"
+            android:id="@+id/cuk10"
             android:layout_width="200dp"
             android:layout_height="45dp"
             android:layout_below="@id/label1"
             android:layout_marginTop="20dp"
             android:layout_marginLeft="10dp"
             android:textColor="#0C0C0C"
-            android:textSize="20dp"
-            android:text="Grad Cam"
+            android:textSize="25dp"
+            android:text="CLAHE Image"
+            />
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardview2"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@id/cuk10"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="20dp"
+            >
+            <ImageView
+                android:id="@+id/clahe"
+                android:layout_width="300dp"
+                android:layout_below="@id/cuk10"
+                android:layout_height="300dp"
+                android:layout_centerHorizontal="true"
+                />
+            </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/cuk5"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/cardview2"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#0C0C0C"
+            android:textSize="25dp"
+            android:text="Grad CAM"
             />
         <TextView
             android:id="@+id/cuk6"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@id/label1"
-            android:layout_marginTop="45dp"
+            android:layout_height="25dp"
+            android:layout_below="@id/cardview2"
+            android:layout_marginTop="65dp"
             android:layout_marginLeft="10dp"
             android:textColor="#AEADAD"
             android:textSize="20dp"
-            android:text="Grad Cam result"/>
+            android:text="Health"/>
+        <TextView
+            android:id="@+id/cuk7"
+            android:layout_width="50dp"
+            android:layout_height="25dp"
+            android:layout_below="@id/cardview2"
+            android:layout_marginTop="65dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:textColor="#AEADAD"
+            android:textSize="20dp"
+            android:text="Sick"/>
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="300dp"
+            android:src="@drawable/legend"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cuk6"
+            android:layout_centerHorizontal="true"
+            />
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardview"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_below="@id/cuk6"
+            android:layout_below="@id/imageView2"
             android:layout_centerHorizontal="true"
             app:cardCornerRadius="20dp"
             >
@@ -121,10 +167,41 @@
                 android:id="@+id/imageView"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
-                android:layout_below="@+id/cuk6"
+                android:layout_below="@+id/imageView2"
                 android:layout_centerHorizontal="true"
                 />
         </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/cuk8"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/cardview"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="#AEADAD"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:text=""/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/cuk8"
+            >
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/bangkitlogo"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#AEADAD"
+                android:textSize="20dp"
+                android:text="Powered by :"/>
+        </RelativeLayout>
     </RelativeLayout>
 
 </ScrollView>

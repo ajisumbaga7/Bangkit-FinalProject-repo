@@ -4,6 +4,8 @@ from tensorflow import keras
 from PIL import Image
 import io
 import matplotlib.cm as cm
+import cv2
+from skimage import exposure
 
 #this should be the model.h5 path
 from os.path import dirname, join
@@ -117,4 +119,22 @@ def pass_image(byteArray):
     imgByteArr = io.BytesIO()
     superimposed_img.save(imgByteArr, format='JPEG')
     imgByteArr = imgByteArr.getvalue()                      #convert to byte array again
+    return imgByteArr
+
+def CLAHE(byteArray):
+    img_size = (224, 224)
+    img = Image.open(io.BytesIO(byteArray))                 #catch the bytearray from .java, create image from bytearray
+    img = img.convert('RGB')
+    img = img.resize(img_size, Image.NEAREST)               #resize
+    img = keras.preprocessing.image.img_to_array(img)       #convert to np array
+    img = img.astype(np.float32)
+    data = cv2.normalize(img, None, 0, 1, cv2.NORM_MINMAX, cv2.CV_32F)
+    # clahe = cv2.createCLAHE(clipLimit=2.5, tileGridSize=(8,8))
+    # data = clahe.apply(data)
+    data = exposure.equalize_adapthist(data, clip_limit=0.5)
+    data = cv2.normalize(data, None, 0, 255, cv2.NORM_MINMAX, cv2.CV_8U)
+    data = Image.fromarray(np.uint8(data)).convert('RGB')
+    imgByteArr = io.BytesIO()
+    data.save(imgByteArr, format='JPEG')
+    imgByteArr = imgByteArr.getvalue()
     return imgByteArr

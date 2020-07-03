@@ -24,7 +24,7 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
         python {
-            buildPython "C:/Users/bayua/AppData/Local/Programs/Python/Python37/python.exe"
+            buildPython "C:/Users/Admin/anaconda3/envs/dsta/python.exe"
             //buildPython "python3"
 
             pip {
@@ -32,6 +32,8 @@ android {
                 install "tensorflow"
                 install "pillow"
                 install "matplotlib"
+                install "opencv-python"
+                install "scikit-image"
             }
         }
     }

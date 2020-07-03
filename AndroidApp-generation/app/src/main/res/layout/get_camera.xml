@@ -41,7 +41,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="900dp"
+            android:layout_height="1000dp"
             android:layout_marginTop="280dp"
             android:background="@color/white"
             />
@@ -332,7 +332,27 @@
             android:layout_marginRight="15dp"
             android:textColor="@color/white"
             />
-
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_below="@id/classification"
+            android:layout_marginTop="30dp"
+            >
+            <ImageView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/bangkitlogo"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#AEADAD"
+                android:textSize="20dp"
+                android:text="Powered by :"/>
+        </RelativeLayout>
     </RelativeLayout>
 
 

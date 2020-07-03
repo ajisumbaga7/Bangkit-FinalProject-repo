@@ -91,7 +91,9 @@ public class Classification extends AppCompatActivity {
     private TextView Confidence1;
     private TextView Confidence2;
     private TextView Confidence3;
+    private TextView notification;
     private ImageView mimageView;
+    private ImageView clahe;
 
     // priority queue that will hold the top results from the CNN
     private PriorityQueue<Map.Entry<String, Float>> sortedLabels =
@@ -194,13 +196,17 @@ public class Classification extends AppCompatActivity {
                 else {
                     if (topLables[1].equals("Positive")){
                         takePicture();
+                        CLAHE();
                     }
                     else {
                         mimageView = findViewById(R.id.imageView);
                         Bitmap gambar2 = bitmap_helper.getInstance().getBitmap();
                         mimageView.setImageBitmap(gambar2);
                         mimageView.setRotation(mimageView.getRotation()+90);
-                        //Toast.makeText(Classification.this,"The value is negative cannot make Grad Cam",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Classification.this,"The prediction value is negative, so can not make the Grad CAM image",Toast.LENGTH_SHORT).show();
+                        notification = findViewById(R.id.cuk8);
+                        notification.setText("The prediction value is negative, so can not make the Grad CAM image");
+                        CLAHE();
                     }
                 }
 
@@ -258,6 +264,36 @@ public class Classification extends AppCompatActivity {
         mimageView = findViewById(R.id.imageView);
         mimageView.setImageBitmap(mutableBitmap);
         mimageView.setRotation(mimageView.getRotation() + 90);
+
+    }
+
+    private void CLAHE(){
+
+        Bitmap gambar = bitmap_helper.getInstance().getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        gambar.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        //initialize the python
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+        //send bytearray and get back bytearray from py
+        Python py = Python.getInstance();
+        PyObject pyf = py.getModule("myscript");
+        byte[] img_arr = pyf.callAttr("CLAHE", byteArray).toJava(byte[].class);
+
+        //convert byte array to bitmap image
+        Bitmap bmp = BitmapFactory.decodeByteArray(img_arr, 0, img_arr.length);
+        Bitmap mutableBitmap = null;
+        if (bmp != null) {
+            mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
+        }
+
+        //set the image
+        clahe = findViewById(R.id.clahe);
+        clahe.setImageBitmap(mutableBitmap);
+        clahe.setRotation(clahe.getRotation() + 90);
 
     }
 
