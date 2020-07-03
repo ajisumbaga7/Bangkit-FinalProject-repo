@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
-    private static int SPLASH_TIME_OUT = 4000;
+    private static int SPLASH_TIME_OUT = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
