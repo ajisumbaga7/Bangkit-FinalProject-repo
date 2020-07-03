@@ -3,6 +3,7 @@ package com.bangkit.pneumoniadetector;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
@@ -16,13 +17,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.viewpager.widget.ViewPager;
+
+import com.chaquo.python.PyObject;
+import com.chaquo.python.Python;
+import com.chaquo.python.android.AndroidPlatform;
 import com.google.android.material.tabs.TabLayout;
 
 import org.tensorflow.lite.Interpreter;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -61,7 +68,6 @@ public class Classification extends AppCompatActivity {
     // array that holds the highest probabilities
     private String[] topConfidence = null;
 
-
     // selected classifier information received from extras
     private String chosen;
     private boolean quant;
@@ -85,6 +91,7 @@ public class Classification extends AppCompatActivity {
     private TextView Confidence1;
     private TextView Confidence2;
     private TextView Confidence3;
+    private ImageView mimageView;
 
     // priority queue that will hold the top results from the CNN
     private PriorityQueue<Map.Entry<String, Float>> sortedLabels =
@@ -139,10 +146,10 @@ public class Classification extends AppCompatActivity {
 
         // labels that hold top three results of CNN
         label1 = (TextView) findViewById(R.id.label1);
-        label2 = (TextView) findViewById(R.id.label2);
+        //label2 = (TextView) findViewById(R.id.label2);
         // displays the probabilities of top labels
-        Confidence1 = (TextView) findViewById(R.id.Confidence1);
-        Confidence2 = (TextView) findViewById(R.id.Confidence2);
+        //Confidence1 = (TextView) findViewById(R.id.Confidence1);
+        //Confidence2 = (TextView) findViewById(R.id.Confidence2);
         // initialize imageView that displays selected image to the user
         selected_image = (ImageView) findViewById(R.id.selected_image);
 
@@ -156,11 +163,10 @@ public class Classification extends AppCompatActivity {
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Classification.this, camera_get.class);
-                startActivity(i);
+                Intent intent = new Intent(Classification.this, camera_get.class);
+                startActivity(intent);
             }
         });
-
 
         // classify current dispalyed image
         classify_button = (Button)findViewById(R.id.classify_image);
@@ -181,6 +187,24 @@ public class Classification extends AppCompatActivity {
                 }
                 // display the results
                 printTopKLabels();
+                if (bitmap_helper.getInstance().getBitmap()==null)
+                {
+                    Toast.makeText(Classification.this,"cant null",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    if (topLables[1].equals("Positive")){
+                        takePicture();
+                    }
+                    else {
+                        mimageView = findViewById(R.id.imageView);
+                        Bitmap gambar2 = bitmap_helper.getInstance().getBitmap();
+                        mimageView.setImageBitmap(gambar2);
+                        mimageView.setRotation(mimageView.getRotation()+90);
+                        //Toast.makeText(Classification.this,"The value is negative cannot make Grad Cam",Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+
             }
         });
 
@@ -191,10 +215,12 @@ public class Classification extends AppCompatActivity {
             selected_image.setImageBitmap(bitmap);
             // not sure why this happens, but without this the image appears on its side
             selected_image.setRotation(selected_image.getRotation() + 90);
+            bitmap_helper.getInstance().setBitmap(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     // loads tflite grapg from file
     private MappedByteBuffer loadModelFile() throws IOException {
@@ -204,6 +230,35 @@ public class Classification extends AppCompatActivity {
         long startOffset = fileDescriptor.getStartOffset();
         long declaredLength = fileDescriptor.getDeclaredLength();
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength);
+    }
+    private void takePicture(){
+
+        Bitmap gambar = bitmap_helper.getInstance().getBitmap();
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        gambar.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+
+        //initialize the python
+        if (!Python.isStarted()) {
+            Python.start(new AndroidPlatform(this));
+        }
+        //send bytearray and get back bytearray from py
+        Python py = Python.getInstance();
+        PyObject pyf = py.getModule("myscript");
+        byte[] img_arr = pyf.callAttr("pass_image", byteArray).toJava(byte[].class);
+
+        //convert byte array to bitmap image
+        Bitmap bmp = BitmapFactory.decodeByteArray(img_arr, 0, img_arr.length);
+        Bitmap mutableBitmap = null;
+        if (bmp != null) {
+            mutableBitmap = bmp.copy(Bitmap.Config.ARGB_8888, true);
+        }
+
+        //set the image
+        mimageView = findViewById(R.id.imageView);
+        mimageView.setImageBitmap(mutableBitmap);
+        mimageView.setRotation(mimageView.getRotation() + 90);
+
     }
 
     // converts bitmap to byte array which is passed in the tflite graph
@@ -272,12 +327,11 @@ public class Classification extends AppCompatActivity {
         }
 
         // set the corresponding textviews with the results
-        label1.setText("1. "+topLables[1]);
-        label2.setText("2. "+topLables[0]);
-        Confidence1.setText(topConfidence[1]);
-        Confidence2.setText(topConfidence[0]);
+        label1.setText(topLables[1]+" ("+topConfidence[1]+")");
+        //label2.setText("2. "+topLables[0]);
+        //Confidence1.setText(topConfidence[1]);
+        //Confidence2.setText(topConfidence[0]);
     }
-
 
     // resizes bitmap to given dimensions
     public Bitmap getResizedBitmap(Bitmap bm, int newWidth, int newHeight) {

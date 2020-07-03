@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<!--Use Relative Layout instead of default constrain layout.-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,122 +10,121 @@
     android:background="@color/white">
 
     <RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/blueocean">
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:text="Back"
-            android:textColor="@color/white"/>
-    </RelativeLayout>
-    <ImageView
-        android:id="@+id/selected_image"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
-        android:layout_below="@id/selected_image"
-        app:srcCompat="@android:color/background_light"
-        />
-
-    <Button
-        android:id="@+id/classify_image"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/selected_image"
-        android:background="@drawable/costum_button1"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/white"
-        android:text="Classify!" />
-
-
-
-    <LinearLayout
-        android:id="@+id/labels"
         android:layout_width="match_parent"
-        android:layout_height="89dp"
-        android:layout_marginTop="30dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/classify_image"
-        android:layout_gravity="center"
-        android:layout_marginBottom="44dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/cuk"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/blueocean">
+            <Button
+                android:id="@+id/back_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:text="Back"
+                android:textColor="@color/white"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/cuk2"
+            android:layout_width="match_parent"
+            android:layout_height="400dp"
+            android:layout_below="@+id/cuk"
+            android:background="#DFDFDF">
+            <ImageView
+                android:id="@+id/selected_image"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:background="#dfdfdf"
+                android:layout_below="@id/selected_image"
+                app:srcCompat="@android:color/background_light"
+                />
+        </RelativeLayout>
+        <Button
+            android:id="@+id/classify_image"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/cuk2"
+            android:background="@drawable/costum_button1"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"
+            android:text="RESULT" />
+        
+        <TextView
+            android:id="@+id/cuk3"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/classify_image"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#0C0C0C"
+            android:textSize="20dp"
+            android:text="Classification"
+            />
+        <TextView
+            android:id="@+id/cuk4"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/classify_image"
+            android:layout_marginTop="70dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#AEADAD"
+            android:textSize="15dp"
+            android:text="Classified the image to get the result of pneumonia or normal lungs"
+            />
 
-        <LinearLayout
-            android:layout_width="370dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/label1"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/cuk4"
+            android:text="-"
+            android:textSize="30dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#0c0c0c"
+            android:textAlignment="center"/>
 
-            <TextView
-                android:id="@+id/lableText"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:text="Label"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+        <TextView
+            android:id="@+id/cuk5"
+            android:layout_width="200dp"
+            android:layout_height="45dp"
+            android:layout_below="@id/label1"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#0C0C0C"
+            android:textSize="20dp"
+            android:text="Grad Cam"
+            />
+        <TextView
+            android:id="@+id/cuk6"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_below="@id/label1"
+            android:layout_marginTop="45dp"
+            android:layout_marginLeft="10dp"
+            android:textColor="#AEADAD"
+            android:textSize="20dp"
+            android:text="Grad Cam result"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_below="@id/cuk6"
+            android:layout_centerHorizontal="true"
+            app:cardCornerRadius="20dp"
+            >
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_below="@+id/cuk6"
+                android:layout_centerHorizontal="true"
+                />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/ConfidenceText"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:text="Confidence"
-                android:textSize="15sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="370dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/label1"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:text="1."
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/Confidence1"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:text=""
-                android:textSize="14sp" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="370dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/label2"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:text="2."
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/Confidence2"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:text=""
-                android:textSize="14sp" />
-
-        </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+</ScrollView>

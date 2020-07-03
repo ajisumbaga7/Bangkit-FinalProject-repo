@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +24,8 @@ import java.io.File;
 public class camera_get extends AppCompatActivity {
     private Button inceptionFloat;
     private Button CamGrad;
+    private Button Classification;
+    private Button camGrad;
     // for permission requests
     public static final int REQUEST_PERMISSION = 300;
 
@@ -44,15 +47,6 @@ public class camera_get extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.get_camera);
 
-        CamGrad = (Button) findViewById(R.id.camera_for_grade);
-
-        CamGrad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(camera_get.this, grad_cam.class);
-                startActivity(intent);
-            }
-        });
 
         // request permission to use the camera on the user's phone
         if (ActivityCompat.checkSelfPermission(this.getApplicationContext(), android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
@@ -74,8 +68,8 @@ public class camera_get extends AppCompatActivity {
         }
 
         // on click for inception float model
-        inceptionFloat = (Button)findViewById(R.id.inception_float);
-        inceptionFloat.setOnClickListener(new View.OnClickListener() {
+        Classification = (Button) findViewById(R.id.classification);
+        Classification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // filename in assets
@@ -137,13 +131,9 @@ public class camera_get extends AppCompatActivity {
         else if(requestCode == Crop.REQUEST_CROP && resultCode == RESULT_OK){
             imageUri = Crop.getOutput(data);
             Intent i = new Intent(camera_get.this, Classification.class);
-            Intent b = new Intent(camera_get.this, grad_cam.class);
             // put image data in extras to send
-            b.putExtra("grad_cam", imageUri);
             i.putExtra("resID_uri", imageUri);
-            b.putExtra("chosen", chosen);
             // put model type in extras
-            b.putExtra("quant", quant);
             // put filename in extras
             i.putExtra("chosen", chosen);
             // put model type in extras

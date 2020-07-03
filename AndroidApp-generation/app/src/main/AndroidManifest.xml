@@ -28,7 +28,6 @@
         <activity android:name=".Classification"/>
         <activity android:name=".Login_activity"/>
         <activity android:name=".camera_get"/>
-        <activity android:name=".grad_cam"/>
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" android:screenOrientation="portrait"/>
     </application>
 
